@@ -17,7 +17,7 @@ const SyncModalTitle: Record<SyncModalState['status'], string> = {
 };
 
 type SyncModalProps = {
-  onOnlineSync: () => void;
+  // onOnlineSync: () => void;
   onMyClippingsSync: () => void;
 };
 
@@ -42,7 +42,7 @@ export default class SyncModal extends Modal {
         },
         onClick: (mode: SyncMode) => {
           if (mode === 'amazon') {
-            this.props.onOnlineSync();
+            // this.props.onOnlineSync();
           } else {
             this.props.onMyClippingsSync();
           }
