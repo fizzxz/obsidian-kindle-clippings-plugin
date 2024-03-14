@@ -13,7 +13,7 @@ const SyncModalTitle: Record<SyncModalState['status'], string> = {
   'sync:fetching-books': 'Syncing data...',
   'sync:login': 'Syncing data...',
   'sync:syncing': 'Syncing data...',
-  'choose-sync-method': 'Choose a sync method...',
+  'choose-sync-method': 'Sync using the "My Clipping.txt" file'
 };
 
 type SyncModalProps = {
@@ -41,9 +41,7 @@ export default class SyncModal extends Modal {
           this.close();
         },
         onClick: (mode: SyncMode) => {
-          if (mode === 'amazon') {
-            // this.props.onOnlineSync();
-          } else {
+          if (mode === 'my-clippings'){
             this.props.onMyClippingsSync();
           }
         },

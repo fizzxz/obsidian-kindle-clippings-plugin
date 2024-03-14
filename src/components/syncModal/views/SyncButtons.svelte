@@ -14,19 +14,6 @@
     <a
       href="#sync"
       class="kp-syncbuttons--icon"
-      class:kp-syncbuttons--icon-selected={selectedSyncType === 'amazon'}
-      on:click={() => {
-        selectedSyncType = 'amazon';
-      }}
-    >
-      {@html amazonIcon}
-    </a>
-    <div class="kp-syncbuttons-text">Amazon Cloud</div>
-  </div>
-  <div class="kp-syncbuttons--option">
-    <a
-      href="#sync"
-      class="kp-syncbuttons--icon"
       class:kp-syncbuttons--icon-selected={selectedSyncType === 'my-clippings'}
       on:click={() => {
         selectedSyncType = 'my-clippings';
@@ -34,7 +21,8 @@
     >
       {@html clippingsIcon}
     </a>
-    <div class="kp-syncbuttons-text">Upload "My Clippings" file</div>
+    <div class="kp-syncbuttons-text"
+    style="white-space: normal;">Locate your <br>'My Clippings.txt' file</div>
   </div>
 </div>
 
@@ -56,7 +44,7 @@
   }
 
   .kp-syncbuttons--option {
-    width: 120px;
+    width: 150px;
   }
 
   .kp-syncbuttons--option:first-child {
@@ -65,7 +53,7 @@
 
   .kp-syncbuttons--icon {
     display: block;
-    height: 120px;
+    height: 150px;
     padding: 32px;
     border-radius: 4px;
   }
