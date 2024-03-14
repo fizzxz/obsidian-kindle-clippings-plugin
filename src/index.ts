@@ -18,7 +18,7 @@ export default class KindlePlugin extends Plugin {
   private syncClippings!: SyncClippings;
 
   public async onload(): Promise<void> {
-    console.log('Kindle Highlights plugin: loading plugin', new Date().toLocaleString());
+    console.log('Kindle Clippings plugin: loading plugin', new Date().toLocaleString());
 
     this.fileManager = new FileManager(this.app.vault, this.app.metadataCache);
     const syncManager = new SyncManager(this.fileManager);
@@ -34,7 +34,7 @@ export default class KindlePlugin extends Plugin {
 
     this.addCommand({
       id: 'kindle-sync',
-      name: 'Sync highlights',
+      name: 'Sync Clippings',
       callback: async () => {
         await this.showSyncModal();
       },
@@ -88,6 +88,6 @@ export default class KindlePlugin extends Plugin {
 
   public onunload(): void {
     ee.removeAllListeners();
-    console.log('Kindle Highlights plugin: unloading plugin', new Date().toLocaleString());
+    console.log('Kindle Clippings plugin: unloading plugin', new Date().toLocaleString());
   }
 }
