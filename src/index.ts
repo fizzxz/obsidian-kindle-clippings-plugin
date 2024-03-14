@@ -28,7 +28,7 @@ export default class KindlePlugin extends Plugin {
     // this.syncAmazon = new SyncAmazon(syncManager);
     this.syncClippings = new SyncClippings(syncManager);
 
-    this.addRibbonIcon('scissors', 'Sync your Kindle highlights', async () => {
+    this.addRibbonIcon('scissors', 'Sync your Kindle clippings', async () => {
       await this.showSyncModal();
     });
 
