@@ -1,7 +1,6 @@
 <script lang="ts">
   import type { SyncMode } from '~/models';
   import { settingsStore } from '~/store';
-  import amazonIcon from '~/assets/amazonIcon.svg';
   import clippingsIcon from '~/assets/clippingsIcon.svg';
 
   export let onClick: (mode: SyncMode) => void;

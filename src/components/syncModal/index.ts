@@ -9,7 +9,7 @@ import SyncModalContent from './SyncModalContent.svelte';
 const SyncModalTitle: Record<SyncModalState['status'], string> = {
   'upgrade-warning': 'Breaking change notice',
   'first-time': '',
-  idle: 'Your Kindle highlights',
+  idle: 'Your Kindle Clippings',
   'sync:fetching-books': 'Syncing data...',
   'sync:login': 'Syncing data...',
   'sync:syncing': 'Syncing data...',
@@ -17,7 +17,6 @@ const SyncModalTitle: Record<SyncModalState['status'], string> = {
 };
 
 type SyncModalProps = {
-  // onOnlineSync: () => void;
   onMyClippingsSync: () => void;
 };
 

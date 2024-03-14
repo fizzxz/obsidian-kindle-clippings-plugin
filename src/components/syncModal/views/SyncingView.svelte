@@ -2,26 +2,28 @@
   import { Jumper } from 'svelte-loading-spinners';
 
   import { shortenTitle } from '~/utils';
-  import { currentAmazonRegion } from '~/amazonRegion';
-  import { store } from '../store';
+  // import { currentAmazonRegion } from '~/amazonRegion';
+  // import { store } from '../store';
 
   let progressMessage: string;
 
-  $: if ($store.status === 'sync:login') {
-    const region = currentAmazonRegion();
-    progressMessage = `Logging into ${region.hostname}`;
-  } else if ($store?.syncMode === 'amazon') {
-    progressMessage = 'Looking for new Kindle highlights to sync...';
-  } else {
-    progressMessage = 'Parsing your My Clippings files for highlights and notes...';
-  }
+  // $: if ($store.status === 'sync:login') {
+  // //   const region = currentAmazonRegion();
+  // //   progressMessage = `Logging into ${region.hostname}`;
+  // // } else if ($store?.syncMode === 'amazon') {
+  // //   progressMessage = 'Looking for new Kindle highlights to sync...';
+  // // } else
+  //   if ($store?.syncMode=== 'my-clippings') {
+  //     progressMessage = 'Parsing your My Clippings files for highlights and notes...';
+  //   }
+  // }
 
-  $: total = $store.jobs?.length;
+  // $: total = $store.jobs?.length;
 
   export let onDone: () => void;
 </script>
 
-{#if $store.erroredJobs.length > 0}
+<!-- {#if $store.erroredJobs.length > 0}
   <div class="kp-syncmodal--error">
     {`${$store.erroredJobs.length} books(s) could not be synced because of errors`}
   </div>
@@ -102,4 +104,4 @@
     align-items: center;
     margin: 40px 0;
   }
-</style>
+</style> -->
