@@ -65,7 +65,6 @@ export default class KindlePlugin extends Plugin {
     }).show();
   }
 
-
   public onunload(): void {
     ee.removeAllListeners();
     console.log('Kindle Clippings plugin: unloading plugin', new Date().toLocaleString());
