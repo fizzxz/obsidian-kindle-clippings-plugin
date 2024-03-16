@@ -24,7 +24,7 @@ type Settings = {
 const DEFAULT_SETTINGS: Settings = {
   amazonRegion: 'global',
   highlightsFolder: '/',
-  lastSyncMode: 'amazon',
+  lastSyncMode: 'my-clippings',
   isLoggedIn: false,
   syncOnBoot: false,
   downloadBookMetadata: true,

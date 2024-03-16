@@ -34,7 +34,7 @@ export type BookMetadata = {
   authorUrl?: string;
 };
 
-export type SyncMode = 'amazon' | 'my-clippings';
+export type SyncMode =  'my-clippings';
 
 export type AmazonAccountRegion =
   | 'global'
@@ -45,13 +45,6 @@ export type AmazonAccountRegion =
   | 'italy'
   | 'UK'
   | 'france';
-
-export type AmazonAccount = {
-  name: string;
-  hostname: string;
-  kindleReaderUrl: string;
-  notebookUrl: string;
-};
 
 export type KindleFrontmatter = {
   bookId: string;

@@ -1,7 +1,5 @@
-import { addIcon, Plugin } from 'obsidian';
+import { Plugin } from 'obsidian';
 
-// import { get } from 'svelte/store';
-import kindleIcon from '~/assets/kindleIcon.svg';
 import SyncModal from '~/components/syncModal';
 import { ee } from '~/eventEmitter';
 import FileManager from '~/fileManager';
@@ -10,11 +8,9 @@ import { SettingsTab } from '~/settings';
 import { initializeStores } from '~/store';
 import { SyncClippings, SyncManager } from '~/sync';
 
-addIcon('kindle', kindleIcon);
 
 export default class KindlePlugin extends Plugin {
   private fileManager!: FileManager;
-  // private syncAmazon!: SyncAmazon;
   private syncClippings!: SyncClippings;
 
   public async onload(): Promise<void> {
@@ -25,7 +21,6 @@ export default class KindlePlugin extends Plugin {
 
     await initializeStores(this, this.fileManager);
 
-    // this.syncAmazon = new SyncAmazon(syncManager);
     this.syncClippings = new SyncClippings(syncManager);
 
     this.addRibbonIcon('scissors', 'Sync your Kindle clippings', async () => {
@@ -45,9 +40,6 @@ export default class KindlePlugin extends Plugin {
     registerNotifications();
     this.registerEvents();
 
-    // if (get(settingsStore).syncOnBoot) {
-    //   await this.startAmazonSync();
-    // }
   }
 
   private registerEvents(): void {
@@ -58,15 +50,6 @@ export default class KindlePlugin extends Plugin {
           return;
         }
 
-        // menu.addItem((item) => {
-        //   item
-        //     .setTitle('Resync Kindle highlights in file')
-        //     .setIcon('kindle')
-        //     .setDisabled(kindleFile.book.asin == null)
-        //     .onClick(async () => {
-        //       await this.syncAmazon.resync(kindleFile);
-        //     });
-        // });
       })
     );
 
@@ -82,9 +65,6 @@ export default class KindlePlugin extends Plugin {
     }).show();
   }
 
-  // private async startAmazonSync(): Promise<void> {
-  //   await this.syncAmazon.startSync();
-  // }
 
   public onunload(): void {
     ee.removeAllListeners();

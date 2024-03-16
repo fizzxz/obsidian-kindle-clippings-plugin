@@ -1,6 +1,7 @@
 # Obsidian Kindle Plugin
 
-This fork of obsidian kindle plugin will only use the "My Clipping.txt" file.
+As I personally have no use for online amazon syncing, this fork of obsidian kindle plugin will only use the "My Clipping.txt" file to create
+the notes for your clippings.
 
 ## Kindle Device (My Clippings)
 
