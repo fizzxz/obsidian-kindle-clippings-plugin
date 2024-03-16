@@ -87,9 +87,9 @@ export default class FileManager {
    * (b) rendered book highlights
    */
   private generateBookContent(book: Book, content: string, highlightsCount: number): string {
-    return mergeFrontmatter(content, {
-      [SyncingStateKey]: bookToFrontMatter(book, highlightsCount),
-    });
+    return mergeFrontmatter(content,
+      bookToFrontMatter(book, highlightsCount)
+    );
   }
 
   private generateUniqueFilePath(book: Book): string {
