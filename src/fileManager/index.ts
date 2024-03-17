@@ -24,23 +24,24 @@ export default class FileManager {
 
   public mapToKindleFile(fileOrFolder: TAbstractFile): KindleFile | undefined {
     if (fileOrFolder instanceof TFolder) {
+      // If the input is a folder, we need to check if it contains files with the required frontmatter
+      const filesInFolder = fileOrFolder.children as TFile[];
+      for (const file of filesInFolder) {
+        const kindleFrontMatter = this.findKindleFrontMatter(file);
+        if(kindleFrontMatter==null){
+          break
+        }
+        return kindleFrontMatter
+      }
+      // If none of the files in the folder have the required frontmatter, return undefined
       return undefined;
     }
-
     const file = fileOrFolder as TFile;
-
-    const fileCache = this.metadataCache.getFileCache(file);
-
-    // File cache can be undefined if this file was just created and not yet cached by Obsidian
-    const kindleFrontmatter = fileCache?.frontmatter?.[SyncingStateKey] as KindleFrontmatter;
-
-    if (kindleFrontmatter == null) {
-      return undefined;
+    const kindleFrontMatter = this.findKindleFrontMatter(file);
+    if(kindleFrontMatter==null){
+      return undefined
     }
-
-    const book = frontMatterToBook(kindleFrontmatter);
-
-    return { file, frontmatter: kindleFrontmatter, book };
+    return kindleFrontMatter
   }
 
   public getKindleFiles(): KindleFile[] {
@@ -55,17 +56,17 @@ export default class FileManager {
   ): Promise<void> {
     const folderPath = this.generateFolderPath(book);
     try {
-        await this.vault.createFolder(folderPath);
+      await this.vault.createFolder(folderPath);
     } catch (error) {
-      //handle an error that the authors folder already exists
+      // disable eslint to allow error as string
       // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
       const errStr = `${error}`
-      if(errStr.includes("Folder already exists."))
-      {
-        console.log(`folder already created (path="${folderPath})"`);
-      } else{
+      //catch error for folders that have already been created
+      // of clippings that have already been processed
+      if (errStr.includes("Folder already exists.")) {
+      } else {
         console.log(errStr)
-        console.error("Unexpected error occured: "+errStr);
+        console.error("Unexpected error occured: " + errStr);
         throw error;
       }
     }
@@ -134,5 +135,19 @@ export default class FileManager {
   private generateFolderPath(book: Book): string {
     const folderPath = authorFolderPath(book);
     return folderPath;
+  }
+
+  private findKindleFrontMatter(file: TFile): KindleFile | undefined {
+    const fileCache = this.metadataCache.getFileCache(file);
+
+    // File cache can be undefined if this file was just created and not yet cached by Obsidian
+    const kindleFrontmatter = fileCache?.frontmatter as unknown as KindleFrontmatter;
+
+    if (kindleFrontmatter != null) {
+      const book = frontMatterToBook(kindleFrontmatter);
+      return { file, frontmatter: kindleFrontmatter, book };
+    }else {
+      return undefined
+    }
   }
 }
