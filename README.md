@@ -1,7 +1,14 @@
 # Obsidian Kindle Plugin
 
-As I personally have no use for online amazon syncing, this fork of obsidian kindle plugin will only use the "My Clipping.txt" file to create
-the notes for your clippings.
+As I personally have no use for online amazon syncing,
+this fork of obsidian kindle plugin will only focus on the "My Clipping.txt" file to create the notes for your clippings.
+
+## Added Features
+
+- **Ability to seperate clippings by their corresponding authors.**
+- **The front matter of the original "kindle-sync" has been removed**
+  thus accomodating for obsidian properties.
+- _more features soon_
 
 ## Kindle Device (My Clippings)
 
@@ -14,8 +21,6 @@ You can extract your `My Clippings.txt` file by plugging it into your computer u
 ## Features
 
 - **Sync non-Amazon books** — Sync your highlights by uploading your `My Clippings.txt` file from your Kindle device
-
-- **Enriched metadata** — Enrich your notes by downloading extra metadata information about your book from Amazon.com
 
 - **Powerful, flexible templating with preview** — Customise your highlights and file names to your liking by configuring your own template using ([Nunjucks][1]) templating language with live preview
 
