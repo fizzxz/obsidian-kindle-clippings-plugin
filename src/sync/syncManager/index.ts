@@ -34,10 +34,10 @@ export default class SyncManager {
 
     const file = this.fileManager.getKindleFile(book);
     const authorFolder=get(settingsStore).highlightNotesByAuthorFolders;
-    if (authorFolder){
-      await this.createAuthorFolders(book);
-    }
     if (file == null) {
+      if (authorFolder){
+        await this.createAuthorFolders(book);
+      }
       await this.createBook(book, highlights);
     } else {
       await this.resyncBook(file, book, highlights);
