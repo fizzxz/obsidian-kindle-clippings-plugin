@@ -60,7 +60,6 @@ export default class KindlePlugin extends Plugin {
 
   private async showSyncModal(): Promise<void> {
     await new SyncModal(this.app, {
-      // onOnlineSync: () => this.startAmazonSync(),
       onMyClippingsSync: () => this.syncClippings.startSync(),
     }).show();
   }
