@@ -12,8 +12,18 @@ import { settingsStore } from '~/store';
  */
 export const bookFilePath = (book: Book): string => {
   const fileName = getRenderers().fileNameRenderer.render(book);
-  return path.join(get(settingsStore).highlightsFolder, fileName);
+  const folderPath = get(settingsStore).highlightNotesByAuthorFolders ?
+    path.join(get(settingsStore).highlightsFolder, book.author) :
+    get(settingsStore).highlightsFolder;
+    return path.join(folderPath, fileName);
 };
+
+export const authorFolderPath =(book: Book):string =>{
+  const folderPath = get(settingsStore).highlightNotesByAuthorFolders ?
+    path.join(get(settingsStore).highlightsFolder, book.author) :
+    get(settingsStore).highlightsFolder;
+    return folderPath
+}
 
 export const bookToFrontMatter = (book: Book, highlightsCount: number): KindleFrontmatter => {
   return {

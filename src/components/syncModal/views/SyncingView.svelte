@@ -3,7 +3,12 @@
   import { shortenTitle } from '~/utils';
   import { store } from '../store';
   let progressMessage: string;
+  $:{
+    progressMessage = 'Parsing your My Clippings files for highlights and notes...';
+  }
+
   $: total = $store.jobs?.length;
+
   export let onDone: () => void;
 </script>
 

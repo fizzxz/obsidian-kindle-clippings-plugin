@@ -3,7 +3,7 @@ import { MetadataCache, normalizePath, TAbstractFile, TFile, TFolder, Vault } fr
 import type { Book, KindleFile, KindleFrontmatter } from '~/models';
 import { mergeFrontmatter } from '~/utils';
 
-import { bookFilePath, bookToFrontMatter, frontMatterToBook } from './mappers';
+import { authorFolderPath, bookFilePath, bookToFrontMatter, frontMatterToBook } from './mappers';
 
 const SyncingStateKey = 'kindle-sync';
 
@@ -50,6 +50,27 @@ export default class FileManager {
       .filter((file) => file != null);
   }
 
+  public async createFolder(
+    book: Book,
+  ): Promise<void> {
+    const folderPath = this.generateFolderPath(book);
+    try {
+        await this.vault.createFolder(folderPath);
+    } catch (error) {
+      //handle an error that the authors folder already exists
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+      const errStr = `${error}`
+      if(errStr.includes("Folder already exists."))
+      {
+        console.log(`folder already created (path="${folderPath})"`);
+      } else{
+        console.log(errStr)
+        console.error("Unexpected error occured: "+errStr);
+        throw error;
+      }
+    }
+  }
+
   public async createFile(
     book: Book,
     content: string,
@@ -91,7 +112,10 @@ export default class FileManager {
       bookToFrontMatter(book, highlightsCount)
     );
   }
-
+  //TODO instead of creating a duplicate
+  // check if it has the same contents
+  // or if not add onto the bottom the new
+  // clippings.
   private generateUniqueFilePath(book: Book): string {
     const filePath = bookFilePath(book);
 
@@ -105,5 +129,10 @@ export default class FileManager {
     }
 
     return filePath;
+  }
+
+  private generateFolderPath(book: Book): string {
+    const folderPath = authorFolderPath(book);
+    return folderPath;
   }
 }

@@ -7,6 +7,7 @@ import type { AmazonAccountRegion, SyncMode } from '~/models';
 type Settings = {
   amazonRegion: AmazonAccountRegion;
   highlightsFolder: string;
+  highlightNotesByAuthorFolders: boolean;
   lastSyncDate?: Date;
   lastSyncMode: SyncMode;
   isLoggedIn: boolean;
@@ -24,6 +25,7 @@ type Settings = {
 const DEFAULT_SETTINGS: Settings = {
   amazonRegion: 'global',
   highlightsFolder: '/',
+  highlightNotesByAuthorFolders: true,
   lastSyncMode: 'my-clippings',
   isLoggedIn: false,
   syncOnBoot: false,
@@ -107,6 +109,13 @@ const createSettingsStore = () => {
     });
   };
 
+  const setHightlightsByAuthorFolder = (value: boolean) =>{
+    store.update((state) => {
+      state.highlightNotesByAuthorFolders = value;
+      return state;
+    });
+  };
+
   const login = () => {
     store.update((state) => {
       state.isLoggedIn = true;
@@ -164,6 +173,7 @@ const createSettingsStore = () => {
     isLegacy,
     actions: {
       setHighlightsFolder,
+      setHightlightsByAuthorFolder,
       login,
       logout,
       setFileTemplate,

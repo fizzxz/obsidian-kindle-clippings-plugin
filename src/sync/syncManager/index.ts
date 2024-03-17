@@ -33,7 +33,10 @@ export default class SyncManager {
     }
 
     const file = this.fileManager.getKindleFile(book);
-
+    const authorFolder=get(settingsStore).highlightNotesByAuthorFolders;
+    if (authorFolder){
+      await this.createAuthorFolders(book);
+    }
     if (file == null) {
       await this.createBook(book, highlights);
     } else {
@@ -63,6 +66,11 @@ export default class SyncManager {
     const content = getRenderers().fileRenderer.render({ book, highlights, metadata });
 
     await this.fileManager.createFile(book, content, highlights.length);
+  }
+
+  private async createAuthorFolders(book: Book): Promise<void> {
+
+    await this.fileManager.createFolder(book);
   }
 
   private async syncMetadata(book: Book): Promise<BookMetadata> {
