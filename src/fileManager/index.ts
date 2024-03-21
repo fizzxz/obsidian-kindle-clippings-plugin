@@ -1,10 +1,11 @@
 import { MetadataCache, normalizePath, TAbstractFile, TFile, TFolder, Vault } from 'obsidian';
+import { get } from 'svelte/store';
 
 import type { Book, KindleFile, KindleFrontmatter } from '~/models';
+import {settingsStore} from '~/store'
 import { mergeFrontmatter } from '~/utils';
 
 import { authorFolderPath, bookFilePath, bookToFrontMatter, frontMatterToBook } from './mappers';
-
 const SyncingStateKey = 'kindle-sync';
 
 export default class FileManager {
@@ -17,8 +18,9 @@ export default class FileManager {
   public getKindleFile(book: Book): KindleFile | undefined {
     const allSyncedFiles = this.getKindleFiles();
 
-    const kindleFile = allSyncedFiles.find((file) => file.frontmatter.bookId === book.id);
-
+    const kindleFile = allSyncedFiles.find((file) => {
+      return file.frontmatter.bookId === book.id && file.file.path.includes(get(settingsStore).highlightsFolder);
+    });
     return kindleFile == null ? undefined : { ...kindleFile, book };
   }
 
@@ -27,18 +29,17 @@ export default class FileManager {
       // If the input is a folder, we need to check if it contains files with the required frontmatter
       const filesInFolder = fileOrFolder.children as TFile[];
       for (const file of filesInFolder) {
-        const kindleFrontMatter = this.findKindleFrontMatter(file);
-        if(kindleFrontMatter==null){
-          break
+        const kindleFrontMatterFile = this.findKindleFrontMatter(file);
+        if (kindleFrontMatterFile != null) {
+          return kindleFrontMatterFile
         }
-        return kindleFrontMatter
       }
       // If none of the files in the folder have the required frontmatter, return undefined
       return undefined;
     }
     const file = fileOrFolder as TFile;
     const kindleFrontMatter = this.findKindleFrontMatter(file);
-    if(kindleFrontMatter==null){
+    if (kindleFrontMatter == null) {
       return undefined
     }
     return kindleFrontMatter
