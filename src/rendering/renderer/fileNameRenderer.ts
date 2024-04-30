@@ -20,6 +20,9 @@ export default class FileNameRenderer {
       return false;
     }
   }
+   public renderFolderName(folderName: string): string {
+    return sanitize(folderName);
+  }
 
   public render(book: Partial<Book>): string {
     const templateVariables = fileNameTemplateVariables(book);
