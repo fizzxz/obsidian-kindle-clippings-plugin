@@ -1,5 +1,11 @@
-{{ text }} — location: [{{ location }}]({{ appLink }})
+{{ text }}
 
+Page: [{{page}}] - Location: [{{ location }}]
+
+Created Date: [{{createdDate | date("YYYY-MM-DD HH:mm:ss")}}]
+Note:
+{{note}}
+---
 {% if note %}{{note}}{% endif %}
 
 ---
