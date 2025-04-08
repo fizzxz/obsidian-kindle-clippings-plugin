@@ -2,14 +2,25 @@ import { Book, groupToBooks, readMyClippingsFile } from '@hadynz/kindle-clipping
 import fs from 'fs';
 
 import type { BookHighlight, Highlight } from '~/models';
-import { hash } from '~/utils';
+import { hash,parseAuthors  } from '~/utils';
+
+const formatAuthor = (author: string): string => {
+  const authors = parseAuthors(author);
+  return authors
+    .map((a) => {
+      // Check if firstName exists before including it
+      const firstNamePart = a.firstName ? `, ${a.firstName}` : '';
+      return `${a.lastName}${firstNamePart}`;
+    })
+    .join('; ');
+};
 
 const toBookHighlight = (book: Book): BookHighlight => {
   return {
     book: {
       id: hash(book.title),
       title: book.title,
-      author: book.author,
+      author: formatAuthor(book.author),
     },
     highlights: book.annotations
       .filter((entry) => entry.type === 'HIGHLIGHT' || entry.type === 'UNKNOWN')
