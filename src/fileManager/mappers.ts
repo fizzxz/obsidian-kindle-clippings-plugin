@@ -1,3 +1,4 @@
+import { first } from 'lodash';
 import moment from 'moment';
 import path from 'path';
 import { get } from 'svelte/store';
@@ -12,7 +13,8 @@ import { settingsStore } from '~/store';
  */
 export const bookFilePath = (book: Book): string => {
   const fileName = getRenderers().fileNameRenderer.render(book);
-  const folderName=getRenderers().fileNameRenderer.renderFolderName(book.author)
+  const firstAuthor = firstAuthorOfBook(book);
+  const folderName = getRenderers().fileNameRenderer.renderFolderName(firstAuthor)
   const folderPath = get(settingsStore).highlightNotesByAuthorFolders ?
     path.join(get(settingsStore).highlightsFolder, folderName) :
     get(settingsStore).highlightsFolder;
@@ -20,7 +22,8 @@ export const bookFilePath = (book: Book): string => {
 };
 
 export const authorFolderPath =(book: Book):string =>{
-  const folderName=getRenderers().fileNameRenderer.renderFolderName(book.author)
+  const firstAuthor =firstAuthorOfBook(book);
+  const folderName = getRenderers().fileNameRenderer.renderFolderName(firstAuthor)
   const folderPath = get(settingsStore).highlightNotesByAuthorFolders ?
   path.join(get(settingsStore).highlightsFolder, folderName) :
   get(settingsStore).highlightsFolder;
@@ -54,3 +57,8 @@ export const frontMatterToBook = (frontmatter: KindleFrontmatter): Book => {
     imageUrl: frontmatter.bookImageUrl,
   };
 };
+
+function firstAuthorOfBook(book: Book) {
+  return book.author.split(';')[0].trim();
+}
+
